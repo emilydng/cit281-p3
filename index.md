@@ -16,8 +16,8 @@ Goals and Outcomes
 
 coinage index.html
 
-```violet
-  `<!DOCTYPE html>
+```rouge
+  <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -36,7 +36,7 @@ coinage index.html
         <li><a href="/coins?option=3">Option 3 = 57 (Extra Credit)</a></li>
     </ul>
 </body>
-</html>`
+</html>
 
 ```
 
