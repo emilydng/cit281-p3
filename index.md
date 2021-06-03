@@ -14,7 +14,31 @@ Goals and Outcomes
 
 ```
 
-[Coinage HTML](file:///Users/emilydeng/Desktop/cit281/p3/index.html)
+coinage index.html
+
+```red
+  `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Coinage</title>
+
+  <style>
+  </style>
+</head>
+
+<body>
+    <h1>Welcome to Coinage!</h1>
+    <ul>
+        <li><a href="/coin?denom=25&count=3">3 x 25 coin = 75</a></li>
+        <li><a href="/coins?option=1">Option 1 = 35</a></li>
+        <li><a href="/coins?option=2">Option 2 = 57</a></li>
+        <li><a href="/coins?option=3">Option 3 = 57 (Extra Credit)</a></li>
+    </ul>
+</body>
+</html>`
+
+```
 
 +
 
