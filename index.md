@@ -16,7 +16,7 @@ Goals and Outcomes
 
 coinage index.html
 
-```red
+```violet
   `<!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +40,6 @@ coinage index.html
 
 ```
 
-+
 
 p3-server.js
 
