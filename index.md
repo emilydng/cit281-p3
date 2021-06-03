@@ -17,7 +17,7 @@ Goals and Outcomes
 coinage index.html
 
 ```rouge
- `<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -36,7 +36,7 @@ coinage index.html
         <li><a href="/coins?option=3">Option 3 = 57 (Extra Credit)</a></li>
     </ul>
 </body>
-</html>`
+</html>
 
 ```
 
@@ -44,7 +44,7 @@ coinage index.html
 p3-server.js
 
 ```rouge
-  `const fs = require('fs');
+  const fs = require('fs');
 const fastify = require('fastify')();
 const p3 = require('./p3-module');
 
@@ -106,13 +106,13 @@ fastify.listen(listenPort, listenIP, (err, address) => {
     }
     console.log(`Server listening on ${address}`);
 });
-`
+
 ```
 
 p3-module.js
 
 ```rouge
-  `/*
+  /*
     CIT 281 Project 3
     Name: Emily Deng
 */
@@ -152,6 +152,6 @@ console.log("{}s", coinCount({denom: 5, count: 3},{denom: 10, count: 2}));
 const coins = [{denom: 25, count: 2},{denom: 1, count: 7}];
 console.log("...[{}]", coinCount(...coins));
 console.log("[{}]", coinCount(coins));  // Extra credit
-*/`
+*/
 
 ```
