@@ -1,37 +1,134 @@
-## Welcome to GitHub Pages
+## Project 3
 
-You can use the [editor on GitHub](https://github.com/killua-boop/cit281-p3/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+``` markdown
+Goals and Outcomes
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+  - Gain experience interpreting functional descriptions and specifications to complete an assignment
+  - Gain experience breaking a project into manageable components
+  - Gain experience writing and executing non-web server Node.js JavaScript code using VSCode
+  - Practice creating and using code modules
+  - Practice refactoring using modern JavaScript syntax
+  - Gain experience writing and executing web server Node.js JavaScript code using VSCode
+  - Gain experience using Fastify with the GET verb, routes, and query parameters
+  - Gain experience loading a file and using as a web page
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+[Coinage HTML](file:///Users/emilydeng/Desktop/cit281/p3/index.html)
 
-### Jekyll Themes
++
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/killua-boop/cit281-p3/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+p3-server.js
 
-### Support or Contact
+```rouge
+  `const fs = require('fs');
+const fastify = require('fastify')();
+const p3 = require('./p3-module');
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+fastify.get('/', (request, reply) => {
+    fs.readFile(__dirname + '/index.html', (err, data) => {
+        if (err) {
+            reply
+                .code(500);
+        }
+        else {
+            reply
+                .code(200)
+                .header('Content-Type', 'text/html; charset=utf-8')
+                .send(data);
+        }
+    });
+});
+
+fastify.get('/coin', (request, reply) => {
+
+    const coins = {denom: parseInt(request.query.denom), count: parseInt(request.query.count)};
+    const coinValue = p3.coinCount(coins);
+    reply
+      .code(200)
+      .header("Content-Type", "text/html; charset=utf-8")
+      .send(`<h2>Value of ${coins.count} of ${coins.denom} is ${coinValue}</h2><br /><a href="/">Home</a>`);
+})
+
+fastify.get('/coins', (request, reply) => {
+    const coins = [{denom: 25, count: 2},{denom: 1, count: 7}];
+    switch (request.query.option) {
+        case '1':
+            coinValue = p3.coinCount({ denom: 5, count: 3 }, { denom: 10, count: 2 });
+            break;
+        case '2':
+            coinValue = p3.coinCount(...coins);
+            break;
+        case '3':
+            coinValue = p3.coinCount(coins);
+            break;
+        default:
+            coinValue = 0;
+            break;
+    }
+    reply
+      .code(200)
+      .header("Content-Type", "text/html; charset=utf-8")
+      .send(`<h2>Option ${request.query.option} value is ${coinValue}</h2><br /><a href="/">Home</a>`);
+
+})
+
+const listenIP = 'localhost';
+const listenPort = 8080;
+
+fastify.listen(listenPort, listenIP, (err, address) => {
+    if (err) {
+       console.log(err);
+       process.exit(1); 
+    }
+    console.log(`Server listening on ${address}`);
+});
+`
+```
+
+p3-module.js
+
+```rouge
+  `/*
+    CIT 281 Project 3
+    Name: Emily Deng
+*/
+
+function validDenomination(coin) {
+    const validCoins = [1, 5, 10, 25, 50, 100];
+    return (validCoins.indexOf(coin) !== -1);
+}
+
+function valueFromCoinObject(obj) {
+    //denom: Coin denomination, must be either 1, 5, 10, 25, 50, or 100
+    //count: The number of the specified coin
+
+    const denom = obj.denom;
+    const count = obj.count;
+    return denom*count;
+
+}
+
+function valueFromArray(arr) {
+    const reducer = (total, current) => {
+        if (Array.isArray(current)) {
+            return total + current.reduce(reducer, total);
+        }
+        return total + valueFromCoinObject(current);
+    };
+    return arr.reduce(reducer, 0);
+}
+
+exports.coinCount = (...coinage) => {
+    return valueFromArray(coinage);
+}
+
+/*
+console.log("{}", coinCount({denom: 5, count: 3}));
+console.log("{}s", coinCount({denom: 5, count: 3},{denom: 10, count: 2}));
+const coins = [{denom: 25, count: 2},{denom: 1, count: 7}];
+console.log("...[{}]", coinCount(...coins));
+console.log("[{}]", coinCount(coins));  // Extra credit
+*/`
+
+```
