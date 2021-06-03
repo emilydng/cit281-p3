@@ -17,7 +17,7 @@ Goals and Outcomes
 coinage index.html
 
 ```rouge
-   <!DOCTYPE html>
+  <!DOCTYPE html>
   <html>
   <head>
     <meta charset="utf-8">
